@@ -1,0 +1,11 @@
+.theme-config .img-responsive{
+	width: 100%
+}
+#hook_top_header .theme-config{
+	padding-top: 20px
+}
+.theme-config .thumbnail{
+	padding: 0;
+	border: none;
+	margin-bottom: 0
+}
