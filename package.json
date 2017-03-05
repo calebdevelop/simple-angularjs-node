@@ -2,12 +2,12 @@
   "name": "package",
   "version": "1.0.0",
   "description": "chat",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "node index.js"
+    "test": "node app.js"
   },
   "repository": {
-    "type": "git",
+    "type": "rest-api-express",
     "url": "dev"
   },
   "keywords": [
@@ -17,6 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.15.0",
+    "orm": "^3.2.3",
     "socket.io": "^1.7.3"
   }
 }

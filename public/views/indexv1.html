@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html ng-app="chat">
+<head>
+<meta charset="utf-8">
+<base href="http://localhost:8080/" />
+<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="css/global.css">
+<!-- navbar.css plugin -->
+<link rel="stylesheet" type="text/css" href="css/plugins/navbar.css">
+<!-- header-default.css plugin -->
+<link rel="stylesheet" type="text/css" href="css/plugins/header-default.css">
+<!-- carousel.css plugin -->
+<link rel="stylesheet" type="text/css" href="css/plugins/carousel.css">
+<!-- configurateur de theme : plugin -->
+<link rel="stylesheet" type="text/css" href="css/plugins/theme-config.css">
+<!-- depeche liste : plugin -->
+<link rel="stylesheet" type="text/css" href="css/plugins/depeche-liste.css">
+<!-- footer : plugin -->
+<link rel="stylesheet" type="text/css" href="css/plugins/footer.css">
+</head>
+<body>
+	<!-- Hook display nav -->
+	<nav class="navbar navbar-inverse" nav-bar>
+	  
+	</nav>
+	<!-- /Hook display nav -->
+
+
+	<!-- Hook header -->
+	<div class="header" top-header>
+		
+	</div>
+	<!-- /Hook header -->
+
+
+	<!-- content -->
+	<div id="content" class="container">
+	    <div ui-view>
+		
+		</div>
+	</div>
+
+
+	<!-- display footer -->
+	<footer ui-footer>
+		
+	</footer>
+	<!-- /display footer -->
+<!-- app -->
+<script src="socket.io/socket.io.js"></script>
+<script src="js/vendor/angular.min.js"></script>
+<script src="js/vendor/angular-ui-router.min.js"></script>
+<script src="js/app.js"></script>
+
+<!-- service -->
+<script src="js/services/socket.service.js"></script>
+<!-- controllers -->
+<script src="js/controllers/home.controller.js"></script>
+
+<!-- directives -->
+<script src="js/directives/header.directive.js"></script>
+</body>
+</html>

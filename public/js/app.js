@@ -45,6 +45,12 @@ app.config(["$stateProvider","$urlRouterProvider","$locationProvider",
 	.state("login",{
 		url : "/login",
 		templateUrl : "views/aut/login.html"
+	})
+
+	.state("register",{
+		url : "/register",
+		templateUrl : "views/aut/register.html",
+		//controller : "registerController"
 	});
 	
 	$locationProvider.html5Mode(true);
