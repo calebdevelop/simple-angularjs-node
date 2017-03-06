@@ -17,13 +17,22 @@ function AuthController(){
 
 	this.register = function(req,res){
 		if (!req.body) return res.sendStatus(400)
-		req.models.users.create({name:"caleb",fname:"dev"},function(err){
+		var user = {
+			name : req.body.name,
+			fname : req.body.fname,
+			mail : req.body.mail,
+			password : req.body.password
+		};
+		req.models.users.create(user,function(err){
+			res.set('Content-Type', 'application/json');
 			if (err) {
-				console.log(err);
+				res.json({success:false,message:"duplicate enrty"})
+			}else{
+				res.json({success:true})
 			}
 		});
-		res.set('Content-Type', 'application/json');
-		res.send(req.body)
+		
+		
 	}
 
 	
