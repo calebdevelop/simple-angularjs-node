@@ -8,8 +8,10 @@ module.exports = function(express,bodyParser,__path,orm) {
 	    define: function (db, models, next) {
 	        models.users = db.define("users", 
 	        	{
-		        	name      : String,
+		        	name    : String,
 	        		fname   : String,
+	        		mail    : String,
+	        		password: String
 		        }
 	        );
 	        next();

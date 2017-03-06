@@ -8,11 +8,19 @@ app.controller('loginController',function($scope,socket){
 
 });
 
-app.controller('registerController',['$scope','userService',function($scope,userService){
+app.controller('registerController',['$scope','userService','$state',function($scope,userService,$state){
 
 	$scope.register = function(){
-		userService.register().then(function(response){
-			console.log(response);
+		var user = {
+			name: $scope.user.name,
+			fname : $scope.user.fname,
+			mail : $scope.user.email,
+			password : $scope.user.password
+		}
+		userService.register(user).then(function(response){
+			if(response.status == 200){
+				if(response.data.success)$state.go('login');
+			}
 		});
 	}
 

@@ -9,9 +9,9 @@ app.factory('socket', function () {
 
 app.service('userService',function($http){
 	var api = {};
-	
-	api.register = function(){
-		return $http.post('/api/register',{name:'caleb'});
+
+	api.register = function(user){
+		return $http.post('/api/register',user);
 	};
 
 	return api;
