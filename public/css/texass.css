@@ -1,0 +1,24 @@
+.game-content { font-family: verdana,arial,helvetica,sans-serif;//background-color: #FFFFFF; color: #000000; }
+.cart-outline{ width: 70px; text-align: center; padding: 3px 5px; background: #FFF; }
+.cart-outline.red{color: #cc0033;}
+.cart-outline span { display: block;font-weight: bold; }
+.cart-outline span.type{line-height: 1;}
+.cart-outline .center{margin: 0;line-height: .7em;font-size: 2em}
+.cart-outline .top{ text-align: left; }
+.cart-outline .bottom{ text-align: right; }
+.cart-outline.shadow{ box-shadow: 1px 1px 3px #000; -moz-box-shadow: 1px 1px 3px #000; -webkit-box-shadow: 1px 1px 3px #000; }
+.cart-outline.rounded{ border-radius:10px; -moz-border-radius:10px; -webkit-border-radius:10px; }
+
+.poker-table{
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 500px;
+    border-radius: 250px;/* (height / 2) */
+    background: rgb(39, 151, 176);
+    -webkit-box-shadow: inset 0px 1px 19px 7px rgba(0,0,0,1);
+    -moz-box-shadow: inset 0px 1px 19px 7px rgba(0,0,0,1);
+    box-shadow: inset 0px 1px 19px 7px rgba(0,0,0,1);
+
+    border: 10px groove;
+}
