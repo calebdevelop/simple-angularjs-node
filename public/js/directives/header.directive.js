@@ -40,4 +40,30 @@ app.directive("navBar", function(){
 			});
 		}
 	}
+})
+
+.directive("gameContent",function(){
+	return{
+		restrict:"A",
+		link:function(scope,element){
+			var left = 0;
+			var top = 0;
+			var card_spacing = 2;
+			var card_width = element.find('.card-back').width();
+			var card_height = element.find('.card-back').height();
+			var left_step =  card_width + card_spacing;
+			var total_cards = element.find('.card-back').length;
+
+			element.find('.card-back').each(function(index){
+				$(this).css({
+					'margin-top':'-'+top+'px',
+					'margin-left':'-'+left+'px',
+					'z-index': ((total_cards - index) + 1)
+				});
+				left = left + card_spacing;
+				top += 1;
+			});
+		},
+		controller:"texassController"
+	}
 });
