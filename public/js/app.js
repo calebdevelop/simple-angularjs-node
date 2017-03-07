@@ -55,7 +55,8 @@ app.config(["$stateProvider","$urlRouterProvider","$locationProvider",
 
 	.state("texass-holdem",{
 		url : "/texass-holdem",
-		templateUrl : "views/games/texass-holdem.html"
+		templateUrl : "views/games/texass-holdem.html",
+		controller : "texassController"
 	});
 	
 	$locationProvider.html5Mode(true);

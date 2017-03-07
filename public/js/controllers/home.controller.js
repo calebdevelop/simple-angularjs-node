@@ -25,3 +25,45 @@ app.controller('registerController',['$scope','userService','$state',function($s
 	}
 
 }]);
+
+app.controller("texassController",function($scope,$element){
+
+	$scope.shareCard = function(){
+		var time = 1;
+		var top = 40;
+		var left = -130;
+		var position = [
+			{
+				left:100,
+				top:0,
+			},
+			{
+				left:190,
+				top:60
+			},
+			{
+				left:100,
+				top:120
+			},
+			{
+				left:0,
+				top:120
+			}
+		];
+		$element.find('.card-back').each(function(index,element){
+			if(position[index]){
+				setTimeout(function(){					
+					$(element).css({
+						'margin-top':position[index].top+'px',
+						'margin-left':position[index].left+'px',
+					});
+				},time);
+				time += 300;
+			}else{
+				return false;
+			}
+			//console.log(time + " top : " + top + " left : " + left);
+		});
+	}
+
+});
