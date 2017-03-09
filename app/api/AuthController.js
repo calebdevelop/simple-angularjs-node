@@ -1,4 +1,4 @@
-
+var md5 = require('md5');
 module.exports = AuthController
 
 function AuthController(){
@@ -8,7 +8,18 @@ function AuthController(){
 
 	this.loginAction = function(req, res){
 		if (!req.body) return res.sendStatus(400)
-	  	res.send('API')
+		res.set('Content-Type', 'application/json');
+		req.models.users.find({mail:req.body.mail,password:md5(req.body.pass)},1,function(err,user){
+			if (err) throw err;
+			if(!Object.keys(user).length){
+				res.json({success:false,message:"Login ou mot de passe incorrect"});
+			}else{
+				res.json({success:true,data:{
+					id:user[0].id,
+					mail:user[0].mail
+				}});
+			}
+		});
 	}
 
 	this.create = function(req, res){
