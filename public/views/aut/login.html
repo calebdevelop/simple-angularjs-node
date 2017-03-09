@@ -1,4 +1,46 @@
-<h1>Login page</h1>
-<form>
-	
-</form>
+<div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
+    <form mame="user" ng-controller="loginController" ng-submit="login()">
+        <div class="card card-login card-hidden">
+            <div class="card-header text-center" data-background-color="rose">
+                <h4 class="card-title">Login</h4>
+                <div class="social-line">
+                    <a href="#btn" class="btn btn-just-icon btn-simple">
+                        <i class="fa fa-facebook-square"></i>
+                    </a>
+                    <a href="#pablo" class="btn btn-just-icon btn-simple">
+                        <i class="fa fa-twitter"></i>
+                    </a>
+                    <a href="#eugen" class="btn btn-just-icon btn-simple">
+                        <i class="fa fa-google-plus"></i>
+                    </a>
+                </div>
+            </div>
+            <p class="category text-center">
+               	Authentification
+            </p>
+            <div class="card-content">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="material-icons">email</i>
+                    </span>
+                    <div class="form-group label-floating is-empty" ng-class="{'is-empty': user.email.$pristine ,'has-error' : user.email.$invalid && !user.email.$pristine }">
+                        <label class="control-label">Email address</label>
+                        <input type="email" class="form-control" ng-model="user.mail" name="email">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="material-icons">lock_outline</i>
+                    </span>
+                    <div class="form-group label-floating is-empty">
+                        <label class="control-label">Password</label>
+                        <input type="password" class="form-control" ng-model="user.pass" name="password">
+                    </div>
+                </div>
+            </div>
+            <div class="footer text-center">
+                <button type="submit" class="btn btn-primary btn-round">Connexion</button>
+            </div>
+        </div>
+    </form>
+</div>

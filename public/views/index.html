@@ -38,7 +38,7 @@
         </div>
     </nav>
     <div class="wrapper wrapper-full-page">
-        <div class="full-page register-page" filter-color="black" data-image="images/register.jpeg">
+        <div class="full-page register-page" filter-color="black" full-bg="images/register.jpeg">
             <div class="container">                
                 <div class="row" ui-view>
                     
@@ -152,6 +152,7 @@
         </ul>
     </div>
 </div>
+<div class="full-page-background"></div>
 </body>
 <!-- vendor -->
 <script src="js/vendor/jquery-3.1.1.min.js" type="text/javascript"></script>
@@ -177,18 +178,18 @@
 <!-- to do -->
 <script src="js/vendor/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
 <script type="text/javascript">
-    var demo = {
+    /*var demo = {
         checkFullPageBackgroundImage: function(){
             $page = $('.full-page');
             image_src = $page.data('image');
 
             if(image_src !== undefined){
-                image_container = '<div class="full-page-background" style="background-image: url(' + image_src + ') "/>'
+                image_container = ''
                 $page.append(image_container);
             }
         }
     };
-    demo.checkFullPageBackgroundImage();
+    demo.checkFullPageBackgroundImage();*/
     //$('.crool').perfectScrollbar();
 </script>
 <!-- services -->

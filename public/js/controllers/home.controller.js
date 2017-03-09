@@ -1,7 +1,7 @@
 "use strict";
 
-app.controller('homeController',function($scope,socket){
-
+app.controller('homeController',function($scope,socket,$rootScope){
+	
 });
 
 app.controller('loginController',function($scope,socket){
@@ -25,6 +25,24 @@ app.controller('registerController',['$scope','userService','$state',function($s
 	}
 
 }]);
+
+app.controller("loginController",function($scope,$rootScope,$state,userService){
+	$scope.login = function(){
+
+		if($scope.user.mail && $scope.user.pass){
+			userService.login($scope.user.mail,$scope.user.pass).then(function(response){
+				var res = response && response.data;
+				if(res.success){
+					$rootScope.me = {
+						id: res.data.id,
+						mail: res.data.mail
+					};
+					$state.go("home");
+				}
+			});
+		}
+	}
+});
 
 app.controller("texassController",function($scope,$element){
 

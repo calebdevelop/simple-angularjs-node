@@ -14,5 +14,9 @@ app.service('userService',function($http){
 		return $http.post('/api/register',user);
 	};
 
+	api.login = function(mail,pass){
+		return $http.post('/api/login',{mail:mail,pass:pass});
+	}
+
 	return api;
 });

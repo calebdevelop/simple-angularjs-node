@@ -58,7 +58,7 @@
                             <span class="input-group-addon">
                                 <i class="material-icons">face</i>
                             </span>
-                            <div class="form-group label-floating is-empty " ng-class="{'is-empty': user.username.$pristine ,'has-error' : user.username.$invalid && !user.username.$pristine }" material-input> 
+                            <div class="form-group label-floating" ng-class="{'is-empty': user.username.$pristine ,'has-error' : user.username.$invalid && !user.username.$pristine }" material-input> 
                             <!--<span ng-show="!user.username.$valide">The name is required.</span>-->
                             <!-- is-focused -->
                                 <label class="control-label">
@@ -73,7 +73,7 @@
                             <span class="input-group-addon">
                                 <i class="material-icons">face</i>
                             </span>
-                            <div class="form-group label-floating is-empty" ng-class="{'is-empty': user.userfname.$pristine ,'has-error' : user.userfname.$invalid && !user.userfname.$pristine }" material-input> <!-- is-focused -->
+                            <div class="form-group label-floating" ng-class="{'is-empty': user.userfname.$pristine ,'has-error' : user.userfname.$invalid && !user.userfname.$pristine }" material-input> <!-- is-focused -->
                                 <label class="control-label">
                                     First Name
                                     <small>*</small>
@@ -122,10 +122,10 @@
 
 
                         <div>
- <md-checkbox ng-model="data.cb2" aria-label="Checkbox 2" ng-true-value="'yup'" ng-false-value="'nope'">
-  Default Border
- </md-checkbox>
-</div>
+                             <md-checkbox ng-model="data.cb2" aria-label="Checkbox 2" ng-true-value="'yup'" ng-false-value="'nope'">
+                              Default Border
+                             </md-checkbox>
+                        </div>
 
 
 

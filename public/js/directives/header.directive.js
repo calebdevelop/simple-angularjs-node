@@ -14,6 +14,16 @@ app.directive("navBar", function(){
 	}
 })
 
+.directive("fullBg",function(){
+	return{
+		restrict : "A",
+		link:function(scope, element, attributes){
+			$('body').find('.full-page-background').css('background','url(' + attributes['fullBg'] + ') repeat');
+			console.log(attributes['fullBg']);
+		}
+	}
+})
+
 .directive("topHeader", function(){
 	return{
 		restrict : "A",

@@ -1,4 +1,6 @@
-.game-content { font-family: verdana,arial,helvetica,sans-serif;//background-color: #FFFFFF; color: #000000; }
+.game-content { 
+    font-family: verdana,arial,helvetica,sans-serif;//background-color: #FFFFFF; color: #000000;
+}
 .cart-outline{ width: 70px; text-align: center; padding: 3px 5px; background: #FFF; }
 .cart-outline.red{color: #cc0033;}
 .cart-outline span { display: block;font-weight: bold; }
@@ -19,12 +21,25 @@
     height: 400px;
     border-radius: 250px;/* (height / 2) */
     background: rgb(39, 151, 176);
-    -webkit-box-shadow: inset 0px 1px 19px 7px rgba(0,0,0,1);
-    -moz-box-shadow: inset 0px 1px 19px 7px rgba(0,0,0,1);
-    box-shadow: inset 0px 1px 19px 7px rgba(0,0,0,1);
-    border: 10px groove;
+
+    -webkit-box-shadow: 0 1px 10px 1px rgba(0,0,0,0.87) inset, 0 5px 0 0 #6b5636,0 -5px 0 0 #6b5636 ;
+    box-shadow: 0 1px 10px 1px rgba(0,0,0,0.87) inset, 0 5px 0 0 #6b5636,0 -5px 0 0 #6b5636 ;
+    border-style: solid;
+    border-color: #4c3f17;
+    border-width: 7px;
+    //border-top-width: 10px;
+    //border-bottom-width: 8px;
     display: block;
-    margin: 60px
+    margin: 60px;
+
+background: rgba(14,123,11,1);
+background: -moz-linear-gradient(left, rgba(14,123,11,1) 0%, rgba(31,128,31,1) 100%);
+background: -webkit-gradient(left top, right top, color-stop(0%, rgba(14,123,11,1)), color-stop(100%, rgba(31,128,31,1)));
+background: -webkit-linear-gradient(left, rgba(14,123,11,1) 0%, rgba(31,128,31,1) 100%);
+background: -o-linear-gradient(left, rgba(14,123,11,1) 0%, rgba(31,128,31,1) 100%);
+background: -ms-linear-gradient(left, rgba(14,123,11,1) 0%, rgba(31,128,31,1) 100%);
+background: linear-gradient(to right, rgba(14,123,11,1) 0%, rgba(31,128,31,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0e7b0b', endColorstr='#1f801f', GradientType=1 );
 }
 .player{
     position: absolute;
