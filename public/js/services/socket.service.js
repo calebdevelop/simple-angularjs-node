@@ -20,3 +20,11 @@ app.service('userService',function($http){
 
 	return api;
 });
+
+app.service('gameService',function($http){
+	var api = {};
+
+	api.createPlayer = function(user_id,game_id,){
+		return $http.get('/api/createplayer/'+ user_id + '/' + game_id + '/');
+	}
+});

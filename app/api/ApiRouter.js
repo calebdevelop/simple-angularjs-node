@@ -1,5 +1,6 @@
 
 var AuthController = require('./AuthController.js')();
+var GameController = require('./GAmeController.js')();
 
 module.exports = function AutRouter(app,bodyParser){
 	
@@ -11,6 +12,7 @@ module.exports = function AutRouter(app,bodyParser){
 	app.post('/login', AuthController.loginAction);
 	app.get('/create', AuthController.create);
 	app.post('/register', AuthController.register );
+	app.get('/createplayer/:user_id/:game_id', GameController.createplayer);
 
 }
 
