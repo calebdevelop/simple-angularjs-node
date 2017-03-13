@@ -1,5 +1,6 @@
 .game-content { 
     font-family: verdana,arial,helvetica,sans-serif;//background-color: #FFFFFF; color: #000000;
+    background: url(../images/fond.jpg);
 }
 .cart-outline{ width: 70px; text-align: center; padding: 3px 5px; background: #FFF; }
 .cart-outline.red{color: #cc0033;}
@@ -115,7 +116,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0e7b0b', end
 }
 .table-content{
     border: 1px solid white;
-    display: inline-block;
+    margin: 0 auto;
+    display: table;
+    position: relative;
 }
 
 .card-back{

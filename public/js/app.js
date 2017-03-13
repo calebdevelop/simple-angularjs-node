@@ -4,7 +4,7 @@
  * [-] APP
  ******************************************************************************/
  
-var app = angular.module("chat", ["ui.router","ngMaterial"]);
+var app = angular.module("chat", ["ui.router"]);
 
 /*******************************************************************************
  * [-] CONFIG
@@ -61,11 +61,7 @@ app.config(["$stateProvider","$urlRouterProvider","$locationProvider",
 
 	.state("texass-holdem-games-list",{
 		url:"/texass-holdem/games-list",
-		resolve:{
-			game_liste: function(){
-				
-			}
-		}
+		templateUrl : "views/games/texass-holdem.html",
 	});
 	
 	$locationProvider.html5Mode(true);

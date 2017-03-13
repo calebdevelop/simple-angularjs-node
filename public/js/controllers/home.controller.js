@@ -1,10 +1,10 @@
 "use strict";
 
-app.controller('homeController',function($scope,socket,$rootScope){
+app.controller('homeController',function($scope,$rootScope){
 	
 });
 
-app.controller('loginController',function($scope,socket){
+app.controller('loginController',function($scope){
 
 });
 
@@ -44,7 +44,9 @@ app.controller("loginController",function($scope,$rootScope,$state,userService){
 	}
 });
 
-app.controller("texassController",function($scope,$element){
+app.controller("texassController",function($scope,$element,$rootScope){
+
+	$rootScope.fullpage = true;
 
 	$scope.shareCard = function(){
 		var time = 1;

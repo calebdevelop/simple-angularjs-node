@@ -13,6 +13,7 @@ module.exports = function AutRouter(app,bodyParser){
 	app.get('/create', AuthController.create);
 	app.post('/register', AuthController.register );
 	app.get('/createplayer/:user_id/:game_id', GameController.createplayer);
+	app.get('/dispatchCard/:game_id',GameController.dispatchCard);
 
 }
 
