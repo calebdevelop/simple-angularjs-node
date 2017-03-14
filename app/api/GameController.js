@@ -24,6 +24,14 @@ function GameController(){
 		res.send([]);
     }
 
+    this.gamesListe = function(req, res){
+    	res.set('Content-Type', 'application/json');
+    	req.db.driver.execQuery("SELECT * FROM tx_games g WHERE g.id NOT IN (SELECT game_id FROM tx_gamewinners) ", function (err, data) {
+    		res.json({data:data})
+    	})    	
+    	
+    }
+
     this.createplayer = function(req, res){
     	if (!req.body) return res.sendStatus(400)
 

@@ -16,7 +16,8 @@ function AuthController(){
 			}else{
 				res.json({success:true,data:{
 					id:user[0].id,
-					mail:user[0].mail
+					mail:user[0].mail,
+					name:user[0].name
 				}});
 			}
 		});

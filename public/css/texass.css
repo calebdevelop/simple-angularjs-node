@@ -44,7 +44,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0e7b0b', end
 }
 .player{
     position: absolute;
-    z-index: 2
+    z-index: 2;
+    cursor: pointer;
 }
 .player .profil{
     width: 120px;

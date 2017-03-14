@@ -1,6 +1,6 @@
 
 var AuthController = require('./AuthController.js')();
-var GameController = require('./GAmeController.js')();
+var GameController = require('./GameController.js')();
 
 module.exports = function AutRouter(app,bodyParser){
 	
@@ -14,7 +14,7 @@ module.exports = function AutRouter(app,bodyParser){
 	app.post('/register', AuthController.register );
 	app.get('/createplayer/:user_id/:game_id', GameController.createplayer);
 	app.get('/dispatchCard/:game_id',GameController.dispatchCard);
-
+	app.get('/gamesListe',GameController.gamesListe)
 }
 
 

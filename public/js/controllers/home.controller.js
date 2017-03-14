@@ -31,11 +31,13 @@ app.controller("loginController",function($scope,$rootScope,$state,userService){
 
 		if($scope.user.mail && $scope.user.pass){
 			userService.login($scope.user.mail,$scope.user.pass).then(function(response){
-				var res = response && response.data;
+				var res = response.data;
+				console.log(res);
 				if(res.success){
 					$rootScope.me = {
 						id: res.data.id,
-						mail: res.data.mail
+						mail: res.data.mail,
+						name:res.data.name
 					};
 					$state.go("home");
 				}
@@ -44,7 +46,23 @@ app.controller("loginController",function($scope,$rootScope,$state,userService){
 	}
 });
 
-app.controller("texassController",function($scope,$element,$rootScope){
+app.controller("texassController",function($scope,$element,$rootScope,socket,$stateParams){
+
+	var room = $stateParams.room;
+	socket.on('connect', function() {
+	   socket.emit('room', room);
+	});
+
+	socket.on('joinGame',function(data){
+		alert(data);
+	});
+
+	$scope.choosePlace = function($event,position){
+		console.log($rootScope.me);
+		angular.element($event.currentTarget).find('.name').text($rootScope.me.name);
+		socket.emit('newPlayer',{room:room,position:position,user:{$rootScope.me}});
+		
+	}
 
 	$rootScope.fullpage = true;
 

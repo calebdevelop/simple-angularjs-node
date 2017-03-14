@@ -4,7 +4,7 @@
  * [-] APP
  ******************************************************************************/
  
-var app = angular.module("chat", ["ui.router"]);
+var app = angular.module("chat", ["ui.router",'btford.socket-io']);
 
 /*******************************************************************************
  * [-] CONFIG
@@ -53,15 +53,26 @@ app.config(["$stateProvider","$urlRouterProvider","$locationProvider",
 		//controller : "registerController"
 	})
 
-	.state("texass-holdem",{
-		url : "/texass-holdem",
+	.state("texass",{
+		url : "/texass-holdem/:room",
 		templateUrl : "views/games/texass-holdem.html",
 		controller : "texassController"
 	})
 
-	.state("texass-holdem-games-list",{
-		url:"/texass-holdem/games-list",
-		templateUrl : "views/games/texass-holdem.html",
+	.state("tableListe",{
+		url:"/tables-list",
+		templateUrl : "views/games/tables-list.html",
+		resolve :{
+			games : function(gameService){
+				return gameService.gameList().then(function(data){
+					return data.data;
+				});
+			}
+		},
+		controller: function(games,$scope){
+			console.log(games);
+			$scope.liste = games.data;
+		}
 	});
 	
 	$locationProvider.html5Mode(true);

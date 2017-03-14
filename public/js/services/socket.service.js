@@ -2,9 +2,8 @@
 
 
 
-app.factory('socket', function () {
-  var socket = io.connect();
-  return socket;
+app.factory('socket', function (socketFactory) {
+	return socketFactory();
 });
 
 app.service('userService',function($http){
@@ -27,4 +26,10 @@ app.service('gameService',function($http){
 	api.createPlayer = function(user_id,game_id){
 		return $http.get('/api/createplayer/'+ user_id + '/' + game_id + '/');
 	}
+
+	api.gameList = function(){
+		return $http.get('/api/gamesListe');
+	}
+
+	return api;
 });
