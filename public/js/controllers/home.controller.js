@@ -49,18 +49,16 @@ app.controller("loginController",function($scope,$rootScope,$state,userService){
 app.controller("texassController",function($scope,$element,$rootScope,socket,$stateParams){
 
 	var room = $stateParams.room;
-	socket.on('connect', function() {
-	   socket.emit('room', room);
-	});
+	socket.emit('room', room);
 
 	socket.on('joinGame',function(data){
-		alert(data);
+		console.log(data);
 	});
 
 	$scope.choosePlace = function($event,position){
 		console.log($rootScope.me);
 		angular.element($event.currentTarget).find('.name').text($rootScope.me.name);
-		socket.emit('newPlayer',{room:room,position:position,user:{$rootScope.me}});
+		socket.emit('newPlayer',{room:room,position:position,user:$rootScope.me});
 		
 	}
 

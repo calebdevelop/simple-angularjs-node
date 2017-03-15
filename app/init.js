@@ -93,15 +93,16 @@ module.exports = function(express,bodyParser,__path,orm) {
 	server.listen(8080);
 
 	io.on('connection', function(socket) {  
-	    console.log('Client connected...');
+	    console.log(socket.id);
 		// once a client has connected, we expect to get a ping from them saying what room they want to join
 		var room;
 	    socket.on('room', function(room_id) {
 	        socket.join(room_id)
-	        room = room_id       
+	        room = room_id     
+	        console.log("join");   
 	    });
 	    socket.on('newPlayer',function(data){
-	    	console.log(data)
+	    	console.log(data);
         	socket.broadcast.to(room).emit('joinGame',data);
         })
 	});
