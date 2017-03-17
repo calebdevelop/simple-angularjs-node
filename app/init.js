@@ -99,11 +99,24 @@ module.exports = function(express,bodyParser,__path,orm) {
 	    socket.on('room', function(room_id) {
 	        socket.join(room_id)
 	        room = room_id     
-	        console.log("join");   
+	        console.log("join"); 
+	        var user_join_nb = 0; 
+	        socket.on('newPlayer',function(data){
+	        	user_join_nb++
+		    	console.log('user_join_nb : ' + user_join_nb +data);
+	        	socket.broadcast.to(room_id).emit('joinGame',data);
+	        }) 
 	    });
-	    socket.on('newPlayer',function(data){
-	    	console.log(data);
-        	socket.broadcast.to(room).emit('joinGame',data);
-        })
+
+	    io.on('disconnect', function(data){
+		   console.log("disconect");
+		})
+	    
+        var counter = io.sockets.clients(socket.room).length;
+		console.log("soket nb : "+counter)
 	});
+
+	
+
+	
 }

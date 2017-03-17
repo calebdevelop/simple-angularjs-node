@@ -1,10 +1,21 @@
 "use strict";
 
+var socket = io();
+socket.on("contect",function(){
+	console.log("connecter a socket");
+	
+});
+
+socket.on('joinGame',function(data){
+	console.log(data);
+});
+
+
 /*******************************************************************************
  * [-] APP
  ******************************************************************************/
  
-var app = angular.module("chat", ["ui.router",'btford.socket-io']);
+var app = angular.module("chat", ["ui.router"]);
 
 /*******************************************************************************
  * [-] CONFIG
@@ -56,7 +67,7 @@ app.config(["$stateProvider","$urlRouterProvider","$locationProvider",
 	.state("texass",{
 		url : "/texass-holdem/:room",
 		templateUrl : "views/games/texass-holdem.html",
-		controller : "texassController"
+		//controller : "texassController"
 	})
 
 	.state("tableListe",{

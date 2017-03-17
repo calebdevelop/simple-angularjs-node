@@ -2,8 +2,8 @@
 
 
 
-app.factory('socket', function (socketFactory) {
-	return socketFactory();
+app.factory('socket', function () {
+	//return socketFactory();
 });
 
 app.service('userService',function($http){

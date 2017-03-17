@@ -46,19 +46,29 @@ app.controller("loginController",function($scope,$rootScope,$state,userService){
 	}
 });
 
-app.controller("texassController",function($scope,$element,$rootScope,socket,$stateParams){
+app.controller("texassController",function($scope,$element,$rootScope,$stateParams){
 
+	//socketFactory();
+	
 	var room = $stateParams.room;
-	socket.emit('room', room);
-
-	socket.on('joinGame',function(data){
-		console.log(data);
-	});
+	
+	var join_room = false;
+	
+	
+	
 
 	$scope.choosePlace = function($event,position){
-		console.log($rootScope.me);
-		angular.element($event.currentTarget).find('.name').text($rootScope.me.name);
-		socket.emit('newPlayer',{room:room,position:position,user:$rootScope.me});
+		socket.connect();
+		if(!join_room){
+			console.log("emit room");
+			join_room = true;
+			socket.emit('room', room,function(){
+				alert("room pret");
+			});
+		}
+		
+		angular.element($event.currentTarget).find('.name').text("user");
+		socket.emit('newPlayer',{room:room,position:position,user:"user"});
 		
 	}
 
