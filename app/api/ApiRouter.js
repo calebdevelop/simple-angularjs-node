@@ -9,12 +9,15 @@ module.exports = function AutRouter(app,bodyParser){
 	// parse application/json
 	app.use(bodyParser.json())
 
+	app.get('/checksession',AuthController.getSession)
 	app.post('/login', AuthController.loginAction);
 	app.get('/create', AuthController.create);
 	app.post('/register', AuthController.register );
-	app.get('/createplayer/:user_id/:game_id', GameController.createplayer);
+	app.get('/createplayer/:user_id/:game_id/:position', GameController.createplayer);
 	app.get('/dispatchCard/:game_id',GameController.dispatchCard);
 	app.get('/gamesListe',GameController.gamesListe)
+	app.get('/getplayers/:game_id', GameController.getPlayers)
+	app.get('/gettoken/:user_id/:type',GameController.getToken)
 }
 
 

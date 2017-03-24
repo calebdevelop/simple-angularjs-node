@@ -1,14 +1,6 @@
 "use strict";
 
-var socket = io();
-socket.on("contect",function(){
-	console.log("connecter a socket");
-	
-});
 
-socket.on('joinGame',function(data){
-	console.log(data);
-});
 
 
 /*******************************************************************************
@@ -67,7 +59,42 @@ app.config(["$stateProvider","$urlRouterProvider","$locationProvider",
 	.state("texass",{
 		url : "/texass-holdem/:room",
 		templateUrl : "views/games/texass-holdem.html",
-		//controller : "texassController"
+		resolve : {
+			playersListe : function(gameService,$stateParams){
+				return gameService.getPlayers($stateParams.room).then(function(data){
+					console.log(data);
+					return data.data;
+				});
+			}
+		},
+		controller : function(playersListe,$scope){
+			
+
+			var cmp = 0;
+			var response = [];
+			for(var i=1;i<=10;i++){
+				if(typeof playersListe[cmp] != 'undefined'){
+					if(i == playersListe[cmp].position){
+						response.push({
+							position: i,
+							name: playersListe[cmp].name,
+							amount: playersListe[cmp].amount,
+							reserved:true
+						});
+						cmp++;
+						continue;
+					}				
+				}
+				response.push({
+					position: i,
+					name: null,
+					amount: null,
+					reserved:false
+				});
+			}
+			$scope.playersListe = response;
+		}
+		
 	})
 
 	.state("tableListe",{

@@ -1,7 +1,10 @@
+var http = require('http')
+var session = require('express-session')
 module.exports = function(express,bodyParser,__path,orm) { 
 	var app = express();  
 	var api = express();
 	app.use('/api',api);
+	app.use(session({secret:'ij_ok-t-hjavdu'}))
 
 	/* database configuration */
 	api.use(orm.express("mysql://root:@localhost/poker", {
@@ -14,6 +17,12 @@ module.exports = function(express,bodyParser,__path,orm) {
 	        		password: String
 		        }
 	        );
+	        models.jeton = db.define("jeton",
+	        	{
+	        		amount: Number,
+	        		type  : ["texas","slot"]
+	        	}
+	        )
 	        models.games = db.define("tx_games",
 	        	{
 	        		game_id : String,
@@ -23,7 +32,8 @@ module.exports = function(express,bodyParser,__path,orm) {
 	        		maxBuyIn : Number,
 	        		minPlayers: { type: 'integer' },
 	        		maxPlayers : { type: 'integer' },
-	        		board : {type:'text',defaultValue:'[]'}
+	        		board : {type:'text',defaultValue:'[]'},
+	        		gameStatus : [ "NOT_STARTED", "SEATING", "PREFLOP", "FLOP", "TURN", "RIVER", "END_HAND" ]
 	        	}
 	        );
 	        models.actions = db.define("tx_actions",
@@ -40,11 +50,12 @@ module.exports = function(express,bodyParser,__path,orm) {
 	        );
 	        models.players = db.define('tx_players',
 	        	{
-	        		player_id: String,
-	        		folded   : {type:"text",defaultValue:"false"},
-	        		allIn    : {type:"text",defaultValue:"false"},
-	        		talked   : {type:"text",defaultValue:"false"},
-	        		cards    : {type:'text',defaultValue:'[]'}
+	        		player_id: {type:"text"},
+	        		folded   : {type:"text", defaultValue:"false"},
+	        		allIn    : {type:"text", defaultValue:"false"},
+	        		talked   : {type:"text", defaultValue:"false"},
+	        		cards    : {type:'text', defaultValue:'[]'},
+	        		position : {type:'integer'}
 	        	}
 	        );
 	        models.players.hasOne("user",models.users,{reverse: 'players'});
@@ -52,6 +63,7 @@ module.exports = function(express,bodyParser,__path,orm) {
 	        models.gamewinners.hasOne("user",models.users);
 	        models.gamewinners.hasOne("game",models.games,{reverse:'gamewinner'});
 	        models.actions.hasOne("player",models.players,{reverse:'actions'});
+	        models.jeton.hasOne("user",models.users,{reverse:'jetons'})
 
 			/*models.players(1).getUser(function(err,user){
 				console.log(user)
@@ -67,13 +79,14 @@ module.exports = function(express,bodyParser,__path,orm) {
 	    		function(err){
 
 				}
-			);*/
+			);*/			
 			models.actions.sync()
 			models.gamewinners.sync()
 			models.games.sync()
 			models.players.sync()
 			models.users.sync()
-			db.sync()
+			models.jeton.sync()
+			db.sync()			
 	        next();
 	    }
 	}));
@@ -90,7 +103,9 @@ module.exports = function(express,bodyParser,__path,orm) {
 	    res.sendFile(__view_dir + 'index.html');
 	});
 
-	server.listen(8080);
+	var port = 8080
+
+	server.listen(port);
 
 	io.on('connection', function(socket) {  
 	    console.log(socket.id);
@@ -99,12 +114,40 @@ module.exports = function(express,bodyParser,__path,orm) {
 	    socket.on('room', function(room_id) {
 	        socket.join(room_id)
 	        room = room_id     
-	        console.log("join"); 
+	        console.log("new join on : " + room_id); 
 	        var user_join_nb = 0; 
 	        socket.on('newPlayer',function(data){
 	        	user_join_nb++
 		    	console.log('user_join_nb : ' + user_join_nb +data);
-	        	socket.broadcast.to(room_id).emit('joinGame',data);
+
+
+
+		    	//to do : Call create _player rest
+
+				http.get('http://localhost:8080/api/createplayer/' + data.user_id + '/' + data.game_id + '/' + data.position, function(res) {
+					res.on('data',function(result){
+						console.log("add player result : " + result)
+						var response = JSON.parse(result);
+						if(response.success == true){
+							console.log("Player add successfull")
+							socket.broadcast.to(room_id).emit('joinGame',data);
+						}else{
+							//to do only one soket
+							console.log("addPlayerError : " + socket.id + typeof result)
+							socket.emit("addPlayerError", response );
+						}
+					})
+				}).on('error', function(e) {
+				  	console.log("Got error: " + e.message);
+				  	//to do only one socket show error
+				  	socket.emit("addPlayerError",{success:false,message:"error"});
+				});
+				//end
+
+
+
+
+	        	//socket.broadcast.to(room_id).emit('joinGame',data);
 	        }) 
 	    });
 
@@ -119,4 +162,8 @@ module.exports = function(express,bodyParser,__path,orm) {
 	
 
 	
+}
+
+function CallRest(){
+
 }

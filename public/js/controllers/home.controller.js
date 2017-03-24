@@ -35,7 +35,7 @@ app.controller("loginController",function($scope,$rootScope,$state,userService){
 				console.log(res);
 				if(res.success){
 					$rootScope.me = {
-						id: res.data.id,
+						user_id: res.data.id,
 						mail: res.data.mail,
 						name:res.data.name
 					};
@@ -46,7 +46,32 @@ app.controller("loginController",function($scope,$rootScope,$state,userService){
 	}
 });
 
-app.controller("texassController",function($scope,$element,$rootScope,$stateParams){
+app.controller("texassController",function($scope,$element,$rootScope,$stateParams,gameService,$document){
+
+
+	//marche si dans debut app
+	var socket = io();
+	socket.on("contect",function(){
+		console.log("connecter a socket");
+		
+	});
+
+	socket.on('joinGame',function(data){
+		toastr.success("New user " + data.user_id, 'Information!',{timeOut: 5000});
+		//console.log($element.html());
+		console.log("join : " + data);
+		console.log($document.find('.position' + data.postion).html() );
+		$document.find('.position-' + data.position + ' .name').text($rootScope.me.user_id);
+		
+	});
+
+	socket.on("addPlayerError",function(data){
+		console.log(data);
+		toastr.error(data.message, 'Inconceivable!',{timeOut: 5000})
+	});
+
+
+	//
 
 	//socketFactory();
 	
@@ -54,21 +79,40 @@ app.controller("texassController",function($scope,$element,$rootScope,$statePara
 	
 	var join_room = false;
 	
+	//to do : $rootscope
+	if(!$rootScope.me)
+	$rootScope.me = {
+		user_id:1,
+		room:room,
+		//amount:2000,
+		name:"caleb",
+		mail:"test@gmail.com"
+	};
+	else{
+		$rootScope.me.room = room;
+	}
+	//get Token Test
+	gameService.getToken($rootScope.me.user_id,"texas").then(function(token){
+		console.log("token");
+		console.log(token);
+		if(typeof token.data.amount !=  "undefined"){
+			$rootScope.me.amount = token.data.amount;
+		}
+	});
 	
-	
+	//console.log($document.find('.table-content').html());
 
 	$scope.choosePlace = function($event,position){
+		//to do is_set position 
 		socket.connect();
 		if(!join_room){
 			console.log("emit room");
 			join_room = true;
-			socket.emit('room', room,function(){
-				alert("room pret");
-			});
+			socket.emit('room', room);
 		}
 		
-		angular.element($event.currentTarget).find('.name').text("user");
-		socket.emit('newPlayer',{room:room,position:position,user:"user"});
+		//angular.element($event.currentTarget).find('.name').text("user");
+		socket.emit('newPlayer',{room:room,position:position,user_id:$rootScope.me.user_id,game_id:room,amount:$rootScope.amount});
 		
 	}
 

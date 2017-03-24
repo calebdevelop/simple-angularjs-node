@@ -1,6 +1,7 @@
 .game-content { 
     font-family: verdana,arial,helvetica,sans-serif;//background-color: #FFFFFF; color: #000000;
     background: url(../images/fond.jpg);
+    padding-top: 60px
 }
 .cart-outline{ width: 70px; text-align: center; padding: 3px 5px; background: #FFF; }
 .cart-outline.red{color: #cc0033;}
@@ -122,11 +123,23 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0e7b0b', end
     position: relative;
 }
 
+.player .card-back:first-child{
+    transform: rotate(-5deg)
+}
+
+.player .card-back{
+    position: absolute;
+    top: -60px;
+    transform: rotate(5deg);
+    z-index: -1;
+    margin-left: 15px
+}
+
 .card-back{
-    width: 70px;
+    width: 67px;
     height: 97px;
     border: 1px solid #ddd;
-    border-radius: 6px;
+    border-radius: 2px;
     position: absolute;
     background-color: white;
     background-image: url('../images/card.png');
