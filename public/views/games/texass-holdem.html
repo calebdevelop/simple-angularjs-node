@@ -5,12 +5,14 @@
 		
 
 		<div class="table-content">
-			<div ng-repeat="place in playersListe" class="player position-{{place.position}}" ng-click="choosePlace($event,place.position)">	   
-				<div class="card-back" ng-if="place.reserved">
-					<span data-value="A" data-title="A ♣"></span>
-				</div>
-				 <div class="card-back" ng-if="place.reserved">
-					<span data-value="A" data-title="A ♣"></span>
+			<div ng-repeat="place in playersListe" ng-class="'player position-'+place.position" ng-click="choosePlace($event,place.position)">
+				<div class="player-card-content"><!-- to do verif card -->
+					<div class="card-back" ng-if="place.reserved">
+						<span data-value="A" data-title="A ♣"></span>
+					</div>
+					 <div class="card-back" ng-if="place.reserved">
+						<span data-value="A" data-title="A ♣"></span>
+					</div>
 				</div>
 				<div class="profil" ng-if="place.reserved">
 					<div class="avatar"></div>
@@ -163,6 +165,15 @@
 			</div>
 
 			
+		</div>
+		<div class="widget-action" ng-show="playGame">
+			<button ng-click="playGame()" class="btn btn-primary btn-round">Play</button>
+		</div>
+		{{myAction}}
+		<div class="widget-action" ng-show="myAction">
+			<button ng-click="fold()" class="btn btn-primary btn-round">Fold</button>
+			<button ng-click="check()" class="btn btn-primary btn-round">Check</button>
+			<button ng-click="rase()" class="btn btn-primary btn-round">Raise</button>
 		</div>
 		<!-- cart -->
 		<div class="cart-outline shadow rounded red">

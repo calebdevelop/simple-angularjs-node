@@ -42,5 +42,9 @@ app.service('gameService',function($http){
 		return $http.get('/api/gettoken/' + user_id + '/' + type);
 	}
 
+	api.checksession = function(){
+		return $http.get('/api/checksession');
+	}
+
 	return api;
 });

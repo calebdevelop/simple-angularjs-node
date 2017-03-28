@@ -5,6 +5,7 @@
 }
 .cart-outline{ width: 70px; text-align: center; padding: 3px 5px; background: #FFF; }
 .cart-outline.red{color: #cc0033;}
+.cart-outline.black{color: #363636;}
 .cart-outline span { display: block;font-weight: bold; }
 .cart-outline span.type{line-height: 1;}
 .cart-outline .center{margin: 0;line-height: .7em;font-size: 2em}
@@ -121,6 +122,21 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0e7b0b', end
     margin: 0 auto;
     display: table;
     position: relative;
+}
+
+.widget-action{
+    margin: 0 auto;
+    text-align: center;
+}
+
+.player-card-content .cart-outline{
+    position: absolute;
+    z-index: -1;
+    top: -60px;
+    margin-left: 15px
+}
+.m-left-30{
+    margin-left: 30px;
 }
 
 .player .card-back:first-child{

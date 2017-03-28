@@ -18,6 +18,8 @@ module.exports = function AutRouter(app,bodyParser){
 	app.get('/gamesListe',GameController.gamesListe)
 	app.get('/getplayers/:game_id', GameController.getPlayers)
 	app.get('/gettoken/:user_id/:type',GameController.getToken)
+	app.get('/playGame/:game_id', GameController.playGame)
+	app.get('/setgetnextaction/:game_id/:user_id/:action/:amount', GameController.setAndgetNextAction)
 }
 
 

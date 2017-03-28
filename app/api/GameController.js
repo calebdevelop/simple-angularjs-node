@@ -24,6 +24,192 @@ function GameController(){
 		res.send([]);
     }
 
+    this.setAndgetNextAction = function(req, res){
+    	res.set('Content-Type', 'application/json')
+    	req.models.games.find({game_id:req.params.game_id},function(err, game){
+    		if(!Object.keys(game).length || err){
+				res.json({success:false,message:"Game not exist"});
+			}
+			else{
+				//to do get a true nextAction
+				var g = game[0].getPlayers(function(err, players){
+					truvUser = false;
+					result = []
+					var player_id;
+					for(var i in players){
+						if(players[i].user_id == req.params.user_id){
+							switch(req.params.action){
+								case 'fold':
+									players[i].folded = "true"
+									players[i].save(function(err){})
+									break
+								case 'allin':
+									players[i].allIn = "true"
+									players[i].save(function(err){})
+									break
+								case 'talked':
+									players[i].talked = "true"
+									players[i].save(function(err){})
+									break
+							}
+							player_id = players[i].id
+							truvUser = true;
+							if((i+1) < players.length){
+								result = players[i+1]
+							}else{
+								result = players[0]
+							}
+						}
+					}
+					//to do : voir la dernier amount Action par rapport a user_id
+					if(truvUser){
+						//add action 
+						req.models.actions.create({action:req.params.action,amount:req.params.amount,player_id:player_id},function(err){
+
+						})
+						res.json({success:true,data:{player_id:result.player_id,position:result.position,user_id:result.user_id}})
+					}
+					else res.json({success:false,message:"The user is not a player on this game"})
+				})
+			}
+    	})
+    	
+    }
+
+    this.playGame = function(req, res){
+    	res.set('Content-Type', 'application/json')
+    	//generate aleatoire cards poker
+    	
+		//dispatch cards
+		req.models.games.find({game_id:req.params.game_id},function(err, game){			
+			if(!Object.keys(game).length || err){
+				res.json({success:false,message:"Game not exist"});
+			}
+			else{
+				//verif cards is shared
+				var board_liste = JSON.parse(game[0].board)
+
+				game[0].getPlayers().order("position").run(function(err, players){
+					var nb_player = players.length
+					console.log(board_liste)
+					if(!Object.keys(board_liste).length){//dispatch card & get smallBlind
+						var deck = new cards.PokerDeck();
+				    	deck.shuffleAll();
+				    	var allCards = []
+				    	for(var i in deck.deck){
+							allCards.push({
+								suit  : deck.deck[i].suit,
+								value : deck.deck[i].value
+							})
+						}
+						index_card2 = 0
+						have_bb = false
+						b_index = -1
+						s_index = -1
+						for(var i = 0;i < nb_player; i++){
+							index_card2 = i+nb_player
+							
+							var type = players[i].type
+							if(i == 0){
+								if(players[nb_player-1].type == "bigBlind"){
+
+									b_index = i
+									players[i].type = "bigBlind"
+									players[i].save(function(err){
+										if(err) console.log(err)
+									})
+								}
+							}							
+							if(type == "smallBlind"){
+								players[i].type = "other"
+								players[i].save(function(err){
+									if(err) console.log(err)
+								})
+							}
+							if(type == "bigBlind" && !have_bb){
+								s_index = i
+								have_bb = true
+								//maj
+								players[i].type = "smallBlind"
+								players[i].save(function(err){
+									if(err) console.log(err)
+								})
+								//new big blind
+								if((i+1) < nb_player){
+									b_index = i+1
+									players[i+1].type = "bigBlind"									
+									players[i+1].save(function(err){
+										if(err) console.log(err)
+									})
+								}
+							}
+							players[i].cards = JSON.stringify([
+								allCards[i],
+								allCards[index_card2]
+							])
+							players[i].save(function(err){
+								if(err) console.log(err)
+							})
+							
+						}
+						if(s_index == -1 && b_index == -1){
+							players[0].type = "smallBlind"
+							players[0].save(function(err){
+								if(err) console.log(err)
+								else s_index = 0
+							})
+							players[1].type = "bigBlind"
+							players[2].save(function(err){
+								if(err) console.log(err)
+								else b_index = 1
+							})
+						}
+						var board = []
+						for(i = index_card2;i < (index_card2+5);i++){
+							board.push(allCards[i+1])
+						}
+						game[0].gameStatus = "PREFLOP"
+						game[0].board = JSON.stringify(board)
+						game[0].save(function(err){
+							if(err) console.log(err)
+						})
+
+						//smallBlind action && bigBlind
+						req.models.actions.create([
+							{
+								action: "smallBlind",
+								amount: game[0].smallBlind,
+								player_id : players[s_index].id
+							},
+							{
+								action: "bigBlind",
+								amount: game[0].bigBlind,
+								player_id : players[b_index].id
+							}
+						],function(err,item){
+
+						})
+					}
+					//filter result
+					results = []
+					for(var i = 0;i < nb_player; i++){
+						//to do : suppr user_id
+						results.push({
+							"player_id" : players[i].player_id,
+							"cards"     : JSON.parse(players[i].cards),
+							"user_id"   : players[i].user_id,
+							"position"  : players[i].position,
+							"type"      : players[i].type
+						})
+					}			
+					res.json({game_status:game[0].gameStatus,player_card:results})
+				})
+
+			}
+		})
+    	
+    }
+
     this.getToken = function(req, res){
     	res.set('Content-Type', 'application/json');
     	req.models.users.get(req.params.user_id,function(err, user){
@@ -137,7 +323,8 @@ function GameController(){
 									    		{
 									    			user_id: user_id,
 									    			game_id : game_id,
-									    			position : req.params.position
+									    			position : req.params.position,
+									    			type     : "other"
 									    		},
 									    		function(err,data){
 									    			if (err)

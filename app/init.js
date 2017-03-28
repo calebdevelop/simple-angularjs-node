@@ -3,8 +3,10 @@ var session = require('express-session')
 module.exports = function(express,bodyParser,__path,orm) { 
 	var app = express();  
 	var api = express();
+	app.use(session({secret:'sb=d&v-js#bd!v_ok-sjbv@%$'}))
 	app.use('/api',api);
-	app.use(session({secret:'ij_ok-t-hjavdu'}))
+
+
 
 	/* database configuration */
 	api.use(orm.express("mysql://root:@localhost/poker", {
@@ -55,7 +57,8 @@ module.exports = function(express,bodyParser,__path,orm) {
 	        		allIn    : {type:"text", defaultValue:"false"},
 	        		talked   : {type:"text", defaultValue:"false"},
 	        		cards    : {type:'text', defaultValue:'[]'},
-	        		position : {type:'integer'}
+	        		position : {type:'integer'},
+	        		type     : ["smallBlind","bigBlind","other"]
 	        	}
 	        );
 	        models.players.hasOne("user",models.users,{reverse: 'players'});
@@ -128,19 +131,21 @@ module.exports = function(express,bodyParser,__path,orm) {
 					res.on('data',function(result){
 						console.log("add player result : " + result)
 						var response = JSON.parse(result);
+						console.log("user_id : " + data.user_id)
 						if(response.success == true){
 							console.log("Player add successfull")
-							socket.broadcast.to(room_id).emit('joinGame',data);
+							socket.broadcast.to(room_id).emit('joinGame',data)
+							socket.emit("joinGame",data)
 						}else{
 							//to do only one soket
 							console.log("addPlayerError : " + socket.id + typeof result)
-							socket.emit("addPlayerError", response );
+							socket.emit("addPlayerError", response )
 						}
 					})
 				}).on('error', function(e) {
-				  	console.log("Got error: " + e.message);
+				  	console.log("Got error: " + e.message)
 				  	//to do only one socket show error
-				  	socket.emit("addPlayerError",{success:false,message:"error"});
+				  	socket.emit("addPlayerError",{success:false,message:"error"})
 				});
 				//end
 
@@ -148,8 +153,36 @@ module.exports = function(express,bodyParser,__path,orm) {
 
 
 	        	//socket.broadcast.to(room_id).emit('joinGame',data);
-	        }) 
+	        });//end new player
+			socket.on("playGame",function(game_id){
+				//to do join room
+				console.log("playGame")
+				http.get('http://localhost:8080/api/playGame/' + game_id,function(res){
+					res.on('data',function(result){
+						var response = JSON.parse(result)
+						console.log(response)
+						socket.broadcast.to(room_id).emit(response.game_status,response)
+						socket.emit(response.game_status,response)
+					})
+				}).on('error',function(){
+					console.log("playgame Error : " + e.message)
+				})
+			});
+
+			socket.on("setAndNextAction",function(data){
+				http.get('http://localhost:8080/api/setgetnextaction/' + data.game_id + '/' + data.user_id + '/' + data.action + '/' + data.amount, function(res){
+					res.on('data', function(result){
+						var response = JSON.parse(result)
+						if(response.success){
+							socket.broadcast.to(room_id).emit("nextAction", response)
+						}
+					})
+				})
+			})
+			
 	    });
+
+		
 
 	    io.on('disconnect', function(data){
 		   console.log("disconect");

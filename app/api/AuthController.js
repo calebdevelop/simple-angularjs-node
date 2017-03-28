@@ -14,21 +14,24 @@ function AuthController(){
 			if(!Object.keys(user).length){
 				res.json({success:false,message:"Login ou mot de passe incorrect"});
 			}else{
-				var sess = {
-					id:user[0].id,
+				sess = req.session
+				var data = {
+					user_id:user[0].id,
 					mail:user[0].mail,
 					name:user[0].name
 				}
-				req.session.user = sess
-				res.json({success:true,data:sess})
+				sess.user = data
+				res.json({success:true,data:data})
 			}
 		});
 	}
 
 	this.getSession = function(req, res){
 		res.set('Content-Type', 'application/json');
-		if(Object.keys(req.session).length){
-			res.json({success:true,data:req.session.user})
+		sess = req.session
+		console.log(sess)
+		if(sess.user){
+			res.json({success:true,data:sess.user})
 		}else{
 			res.json({success:false})
 		}
