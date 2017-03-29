@@ -63,6 +63,7 @@ function GameController(){
 					}
 					//to do : voir la dernier amount Action par rapport a user_id
 					if(truvUser){
+						console.log(result)
 						//add action 
 						req.models.actions.create({action:req.params.action,amount:req.params.amount,player_id:player_id},function(err){
 
@@ -159,7 +160,7 @@ function GameController(){
 								else s_index = 0
 							})
 							players[1].type = "bigBlind"
-							players[2].save(function(err){
+							players[1].save(function(err){
 								if(err) console.log(err)
 								else b_index = 1
 							})
