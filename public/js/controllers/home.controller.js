@@ -70,7 +70,7 @@ app.controller("texassController",function($scope,$element,$rootScope,$statePara
 	socket.on("addPlayerError",function(data){
 		console.log(data);
 		toastr.error(data.message, 'Inconceivable!',{timeOut: 5000});
-		$state.reload();
+		//$state.reload();
 	});
 
 	socket.on("nextAction",function(data){
@@ -253,6 +253,7 @@ app.controller("texassController",function($scope,$element,$rootScope,$statePara
 	});
 
 	$scope.fold = function(){
+		$scope.myAction = false;
 		socket.emit("setAndNextAction",{action:"fold",game_id:room,user_id:$rootScope.me.user_id,amount:0});
 	}
 

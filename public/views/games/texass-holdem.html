@@ -1,19 +1,20 @@
 
 	<div class="game-content" game-content ng-controller="texassController" ng-init="p=playersListe">
-		{{playersListe}}
+		
 		<!--<p ng-repeat="i in [1,2,3,4]" ng-init="cmp = 1" class="po{{i}}">{{i}}{{ cmp = 9;"" }}</p>-->
 		
 
 		<div class="table-content">
 			<div ng-repeat="place in playersListe" ng-class="'player position-'+place.position" ng-click="choosePlace($event,place.position)">
-				<div class="player-card-content"><!-- to do verif card -->
+				<!-- to do verif card -->
+				<!--<div class="player-card-content">
 					<div class="card-back" ng-if="place.reserved">
 						<span data-value="A" data-title="A ♣"></span>
 					</div>
 					 <div class="card-back" ng-if="place.reserved">
 						<span data-value="A" data-title="A ♣"></span>
 					</div>
-				</div>
+				</div>-->
 				<div class="profil" ng-if="place.reserved">
 					<div class="avatar"></div>
 					<p class="name">{{place.name}}</p>

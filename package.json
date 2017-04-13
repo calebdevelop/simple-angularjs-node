@@ -18,8 +18,11 @@
   "dependencies": {
     "body-parser": "*",
     "card-deck": "^1.0.0",
+    "cards": "^0.1.1",
     "express": "^4.15.0",
     "express-session": "^1.7.6",
+    "md5": "^2.2.1",
+    "mysql": "^2.13.0",
     "orm": "^3.2.3",
     "socket.io": "^1.7.3"
   }

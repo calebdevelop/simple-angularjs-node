@@ -131,7 +131,7 @@ module.exports = function(express,bodyParser,__path,orm) {
 					res.on('data',function(result){
 						console.log("add player result : " + result)
 						var response = JSON.parse(result);
-						console.log("user_id : " + data.user_id)
+						console.log(data)
 						if(response.success == true){
 							console.log("Player add successfull")
 							socket.broadcast.to(room_id).emit('joinGame',data)
